@@ -1,0 +1,9 @@
+@reference "../../app/globals.css";
+
+.button {
+  @apply text-center;
+}
+
+.button:disabled:hover {
+  @apply bg-primary;
+}

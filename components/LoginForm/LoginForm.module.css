@@ -1,0 +1,17 @@
+@reference "../../app/globals.css";
+
+.form {
+  @apply mx-auto mt-6 flex w-full max-w-sm flex-col gap-4;
+}
+
+.switch {
+  @apply text-center text-sm;
+}
+
+.switchLink {
+  @apply font-semibold text-primary;
+}
+
+.switchLink:hover {
+  @apply text-secondary;
+}
