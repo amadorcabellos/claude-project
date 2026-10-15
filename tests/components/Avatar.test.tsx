@@ -15,7 +15,9 @@ describe("Avatar", () => {
   it("renders the first two uppercase letters of a PascalCase name", () => {
     render(<Avatar name="SneakyFox" />)
 
-    expect(screen.getByRole("img", { name: "SneakyFox" })).toHaveTextContent(/^SF$/)
+    expect(screen.getByRole("img", { name: "SneakyFox" })).toHaveTextContent(
+      /^SF$/,
+    )
   })
 
   it("renders one letter for a single capitalised word", () => {

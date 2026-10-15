@@ -1,6 +1,6 @@
-import { Clock8 } from "lucide-react";
-import Link from "next/link";
-import styles from "./Navbar.module.css";
+import { Clock8 } from "lucide-react"
+import Link from "next/link"
+import styles from "./Navbar.module.css"
 
 export default function Navbar() {
   return (
@@ -24,5 +24,5 @@ export default function Navbar() {
         </ul>
       </nav>
     </div>
-  );
+  )
 }
