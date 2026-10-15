@@ -1,6 +1,8 @@
+# Plan: Authentication Forms
+
 ## Overview
 
-Implement functional authentication forms for /login' and '/signup pages with email/password inputs, password visibility toggle, and console-based submission handling.
+Implement functional authentication forms for `/login` and `/signup` pages with email/password inputs, password visibility toggle, and console-based submission handling.
 
 ## Critical Files
 
@@ -38,9 +40,11 @@ Implement functional authentication forms for /login' and '/signup pages with em
 ## Implementation Steps
 
 ### Step 1: Create Input Component
+
 **Files:** `components/Input/`
 
 Create a reusable Input component that:
+
 - Accepts props: `id`, `name`, `type`, `label`, `placeholder`, `required`, `value`, `onChange`
 - Renders a label and input field
 - Uses CSS Modules for styling
@@ -49,50 +53,59 @@ Create a reusable Input component that:
 - Includes HTML5 validation attributes
 
 **Styling approach:**
+
 - Use `@apply` for Tailwind utilities
 - Reference theme variables for colors (--color-primary, --color-error, --color-lighter)
 - Style focus states with primary color
 - Add border and padding for input fields
 
 ### Step 2: Create PasswordInput Component
+
 **Files:** `components/PasswordInput/`
 
 Create a password input with visibility toggle:
 
 - Accepts same props as Input component
-- Includes Eye/Eye0ff icons from `lucide-react` (already available)
+- Includes Eye/EyeOff icons from `lucide-react` (already available)
 - Toggle button switches between `type="password"` and `type="text"`
 - Uses internal state for visibility toggle
 - Button positioned absolutely within input container
 
 **Icon usage:**
+
 ```typescript
 import { Eye, EyeOff } from "lucide-react"
 ```
 
 **Styling approach:**
+
 - Position toggle button inside input field (right side)
 - Make button accessible with proper aria-label
 - Use hover states for toggle button
 
 ### Step 3: Create Button Component
+
 **Files:** `components/Button/`
 
 Create a reusable Button component:
+
 - Accepts props: `type`, `children`, `onClick`, `disabled`
 - Extends existing `.btn` class from globals.css
 - Adds disabled state styling
 - Uses CSS Modules for additional styles
 
 **Implementation:**
+
 - Use `type="submit"` by default for form buttons
 - Support disabled state with reduced opacity
 - Keep existing hover transition from .btn class
 
 ### Step 4: Create LoginForm Component
+
 **Files:** `components/LoginForm/`
 
 Create login form with:
+
 - Email Input component
 - Password Input component
 - Submit Button component ("Log In")
@@ -101,6 +114,7 @@ Create login form with:
 - Basic email validation (HTML5 type="email" + light JS validation)
 
 **Form structure:**
+
 ```tsx
 <form onSubmit={handleSubmit}>
   <Input type="email" label="Email" />
@@ -111,27 +125,31 @@ Create login form with:
 ```
 
 **Form handler:**
+
 - Prevent default form submission
 - Log email and password to console
 - Use controlled inputs with React state
 
 **Validation:**
+
 - Check for empty email/password before submission
 - Use HTML5 email validation
 - Log validation errors to console
 
-
 ### Step 5: Create Signup Form Component
-**Files:** `components/SignupForm/
+
+**Files:** `components/SignupForm/`
 
 Create signup form (nearly identical to LoginForm):
+
 - Same structure as LoginForm
 - Submit button labeled "Sign Up"
 - Link to login page: "Already have an account? Log in"
 - Same validation and console logging behavior
 
 ### Step 6: Update Login Page
-**File:** `app/(public)/login/page.tsx
+
+**File:** `app/(public)/login/page.tsx`
 
 Updates needed:
 
@@ -141,9 +159,11 @@ Updates needed:
 4. Keep h1 heading above form
 
 ### Step 7: Update Signup Page
+
 **File:** `app/(public)/signup/page.tsx`
 
 Updates needed:
+
 1. Import and render SignupForm component
 2. Keep existing layout structure
 3. Keep h2 heading above form
@@ -151,24 +171,28 @@ Updates needed:
 ### Step 8: Create Tests
 
 **Input.test.tsx:**
+
 - Renders with label and placeholder
 - Accepts user input
 - Has required attribute when specified
 - Has correct input type
 
 **PasswordInput.test.tsx:**
+
 - Renders password field (masked by default)
 - Toggle button switches between hidden/visible
 - Eye icon changes to EyeOff when visible
 - Input type changes from password to text
 
 **Button.test.tsx:**
+
 - Renders button with text
 - Calls onClick handler when clicked
 - Shows disabled state
 - Has correct type attribute
 
 **LoginForm.test.tsx:**
+
 - Renders all form fields (email, password, submit button)
 - Submit button has "Log In" text
 - Form submission prevents default behavior
@@ -176,6 +200,7 @@ Updates needed:
 - Link to signup page present
 
 **SignupForm.test.tsx:**
+
 - Renders all form fields
 - Submit button has "Sign Up" text
 - Form submission prevents default behavior
@@ -185,27 +210,32 @@ Updates needed:
 ## Design Decisions
 
 ### Component Architecture
+
 - **Separate LoginForm and SignupForm**: While they're similar, keeping them separate follows single responsibility principle and makes future divergence easier
 - **Reusable Input components**: Input and PasswordInput can be reused across the app
 - **Button component**: Wraps .btn class for consistency and reusability
 
 ### Styling Strategy
+
 - CSS Modules for all components (follows existing pattern)
 - Use `@reference "../../app/globals.css"` to access theme
 - Use `@apply` to combine Tailwind utilities into semantic classes
 - Minimal inline Tailwind classes (per CLAUDE.md preferences)
 
 ### Form State Management
+
 - Use React's built-in `useState` for controlled inputs
 - No external form libraries needed (follows minimal dependencies preference)
 - Store email and password in component state
 
 ### Validation Approach
+
 - HTML5 validation attributes (`type="email"`, `required`)
 - Light JavaScript validation before submission (check for empty fields)
 - Log validation errors to console (no UI error display needed yet)
 
 ### Navigation Between Forms
+
 - Next.js `Link` component at bottom of each form
 - Styled as inline text link (not button)
 - Clear call-to-action text
@@ -213,7 +243,9 @@ Updates needed:
 ## Technical Considerations
 
 ### TypeScript Interfaces
+
 All components will have typed props:
+
 ```typescript
 interface InputProps {
     id: string
@@ -228,17 +260,21 @@ interface InputProps {
 ```
 
 ### Accessibility
+
 - Proper label associations (`htmlFor` and `id`)
 - ARIA labels for password toggle button
 - Keyboard accessible (all inputs and buttons)
 - Semantic HTML (form, label, input, button elements)
 
 ### Icon Integration
+
 Use lucide-react icons (already available):
+
 - `Eye` Show password icon
 - `EyeOff` Hide password icon
 
 ### No Semicolons
+
 Per CLAUDE.md preferences, all code will omit semicolons.
 
 ## Verification Steps
@@ -246,36 +282,38 @@ Per CLAUDE.md preferences, all code will omit semicolons.
 After implementation, verify:
 
 1. **Visual Check:**
-- Navigate to http://localhost:3000/login
-- Form displays with email input, password input (masked), and "Log In" button
-- Password toggle icon appears in password field
-- Link to signup page at bottom
-- Navigate to http://localhost:3000/signup and verify same structure
+   - Navigate to http://localhost:3000/login
+   - Form displays with email input, password input (masked), and "Log In" button
+   - Password toggle icon appears in password field
+   - Link to signup page at bottom
+   - Navigate to http://localhost:3000/signup and verify same structure
 
 2. **Functionality Check:**
-- Enter email and password
-- Click password toggle - text should appear/disappear
-- Submit form - check browser console for logged credentials
-- Verify page doesn't reload on submission
-- Click navigation link - should switch between forms
+   - Enter email and password
+   - Click password toggle - text should appear/disappear
+   - Submit form - check browser console for logged credentials
+   - Verify page doesn't reload on submission
+   - Click navigation link - should switch between forms
 
 3. **Validation Check:**
-- Try submitting empty form - should log error or prevent submission
-- Try invalid email format - HTML5 validation should trigger
-- Enter valid data - should log to console successfully
+   - Try submitting empty form - should log error or prevent submission
+   - Try invalid email format - HTML5 validation should trigger
+   - Enter valid data - should log to console successfully
 
 4. **Run Tests:**
-```bash
-npm test
-```
-All new test files should pass
+
+   ```bash
+   npm test
+   ```
+
+   All new test files should pass
 
 5. **Accessibility Check:**
-- Tab through form all fields should be keyboard accessible
-- Password toggle should work via keyboard (Enter/Space)
-- Screen reader labels should be present (check with browser inspector)
+   - Tab through the form; all fields should be keyboard accessible
+   - Password toggle should work via keyboard (Enter/Space)
+   - Screen reader labels should be present (check with browser inspector)
 
 6. **Responsive Check:**
-- Test on mobile viewport (DevTools)
-- Form should be readable and usable on small screens
-- Inputs should resize appropriately
+   - Test on mobile viewport (DevTools)
+   - Form should be readable and usable on small screens
+   - Inputs should resize appropriately
