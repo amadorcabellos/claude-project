@@ -20,7 +20,8 @@ Pocket Heist ("In. Out. Gone.") — starter project for the Claude Code Mastercl
 
 ## Architecture
 
-- **Route groups** under `app/` split layouts: `(public)` (splash, `login`, `signup`, `preview`) and `(dashboard)` (`heists`, `heists/[id]`, `heists/create`). The public layout wraps pages in `<main className="public">`; the dashboard layout adds `<Navbar />` plus `<main>`. The root layout (`app/layout.tsx`) only sets metadata and imports `app/globals.css`.
+- **Route groups** under `app/` split layouts: `(public)` (splash, `login`, `signup`, `preview`) and `(dashboard)` (`heists`, `heists/[id]`, `heists/create`). The public layout wraps pages in `<main className="public">`; the dashboard layout adds `<Navbar />` plus `<main>`. The root layout (`app/layout.tsx`) sets metadata, imports `app/globals.css` and wraps everything in the client `Providers` from `app/providers.tsx`.
+- **Auth state**: `AuthProvider` (in `Providers`) listens to Firebase `onAuthStateChanged`; read it with `const { user, loading } = useUser()` from `@/lib/auth` in client components only. `user` is `{ uid, email, displayName }` or `null`. Firebase is initialized in `lib/firebase.ts` (config from `NEXT_PUBLIC_FIREBASE_*` in `.env.local`); tests mock `@/lib/firebase`.
 - **Splash page** (`app/(public)/page.tsx`) is meant to route users: logged in → `/heists`, logged out → `/login`. That logic doesn't exist yet because there is no auth.
 - **Components** live in `components/<Name>/` as a folder with the component, a CSS module (`<Name>.module.css`), and an `index.ts` re-export, so imports look like `@/components/Navbar`. Icons come from `lucide-react`.
 - **Forms**: `LoginForm` and `SignupForm` are client components (`"use client"`) built from the shared `Input`, `PasswordInput` (show/hide toggle) and `Button` components; reuse these for new forms. Pages stay server components and just render the form.
