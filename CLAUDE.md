@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Pocket Heist ("In. Out. Gone.") — starter project for the Claude Code Masterclass. Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind CSS v4. No backend/auth/data layer yet: the login and signup forms only `console.log` their details, and most other pages are stubs.
+Pocket Heist ("In. Out. Gone.") — starter project for the Claude Code Masterclass. Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind CSS v4. Firebase (Auth + Firestore) is the backend: `SignupForm` creates the account, sets a random codename (`lib/utils/codename.ts`) as `displayName` and writes `users/{uid}` with `{ id, codename }` (never the email). `LoginForm` still only `console.log`s, and most other pages are stubs.
 
 ## Commands
 

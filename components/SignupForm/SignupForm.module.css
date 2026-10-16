@@ -4,6 +4,10 @@
   @apply mx-auto mt-6 flex w-full max-w-sm flex-col gap-4;
 }
 
+.error {
+  @apply bg-error/10 text-error text-sm p-3 rounded mb-4;
+}
+
 .switch {
   @apply text-center text-sm;
 }

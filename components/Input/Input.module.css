@@ -20,6 +20,10 @@
   @apply outline-2 outline-primary;
 }
 
+.input:disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
 .input:user-invalid {
   @apply border-error;
 }
