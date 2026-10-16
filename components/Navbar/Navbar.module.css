@@ -12,6 +12,23 @@
   @apply font-bold text-xl;
 }
 
+.siteNav ul {
+  @apply flex items-center gap-4;
+}
+
+.logoutButton {
+  @apply flex items-center justify-center w-[127px] h-[38px] rounded-[10px] border border-white bg-transparent text-white text-base tracking-[-0.3125px] cursor-pointer transition-colors;
+}
+.logoutButton:hover {
+  @apply bg-white/10;
+}
+.logoutButton:active {
+  @apply bg-white/20;
+}
+.logoutButton:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
 .createLink {
   @apply flex items-center gap-2 h-10 px-4 rounded-[10px] bg-linear-to-r from-purple-600 to-pink-600 text-white text-base tracking-[-0.3125px] transition-opacity;
 }
