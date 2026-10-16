@@ -39,3 +39,7 @@ Pocket Heist ("In. Out. Gone.") — starter project for the Claude Code Mastercl
 
 - No semicolons; double quotes in TS/TSX (enforced by the Prettier hook).
 - Imports are grouped under short comments such as `// components`.
+
+## Checking Documentation
+
+**important:** When implementing any lib/framework-specific features, ALWAYS check the appropriate lib/framework documentation using the Context7 MCP server before writing any code.
