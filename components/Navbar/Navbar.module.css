@@ -12,6 +12,16 @@
   @apply font-bold text-xl;
 }
 
+.createLink {
+  @apply flex items-center gap-2 h-10 px-4 rounded-[10px] bg-linear-to-r from-purple-600 to-pink-600 text-white text-base tracking-[-0.3125px] transition-opacity;
+}
+.createLink:hover {
+  @apply opacity-90;
+}
+.createLink:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
 svg.logo {
   display: inline-block;
 }
