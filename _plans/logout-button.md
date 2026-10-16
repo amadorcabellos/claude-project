@@ -4,10 +4,6 @@
 
 Add a logout button to the Navbar component that appears only when a user is authenticated, positioned to the left of the "Create New Heist" button. The button will call Firebase's `signOut` function and rely on the existing `AuthProvider` to handle state updates automatically.
 
-## Spec Reference
-
-Based on `_specs/logout-button.md`
-
 ## Critical Files
 
 ### Files to Modify
