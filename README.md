@@ -49,3 +49,8 @@ For route-protection-auth-guards
 ```
 /spec Let's spec some route protection. Pages in the (public) group should only be viewable to unauthenticated users, and pages in the (dashboard) group should only be viewable to authenticated users. Use the useUser hook to conditionally redirect users. Let's also show a very simple loader in the group layouts until the auth status is identified from firebase and the redirects kick in.
 ```
+
+To use skill firestore-schema
+```
+Can you set up types/schemas for heist firestore documents? Heists must have a title, description, createdBy (uid), createdByCodename (their codename/displayName), assignedTo (uid), assignedToCodename (their codename), deadline (a Date, 48 hours from when it was created), finalStatus (null to begin with, then either success or failure in the future).
+```
