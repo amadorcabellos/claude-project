@@ -1,0 +1,9 @@
+@reference "../../app/globals.css";
+
+.overlay {
+  @apply fixed inset-0 z-[9999] flex items-center justify-center bg-dark;
+}
+
+.icon {
+  @apply text-primary animate-spin motion-reduce:animate-none;
+}
