@@ -46,6 +46,31 @@
   //     ]
   //   },
   // ]
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "heists",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "assignedTo", "order": "ASCENDING" },
+        { "fieldPath": "deadline", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "heists",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdBy", "order": "ASCENDING" },
+        { "fieldPath": "deadline", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "heists",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "finalStatus", "order": "ASCENDING" },
+        { "fieldPath": "deadline", "order": "DESCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }

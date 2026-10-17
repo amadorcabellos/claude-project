@@ -1,15 +1,65 @@
+"use client"
+
+// hooks
+import { useHeists } from "@/lib/hooks"
+import type { UseHeistsReturn } from "@/lib/hooks"
+
+interface HeistSectionProps extends UseHeistsReturn {
+  className: string
+  title: string
+  emptyMessage: string
+}
+
+function HeistSection({
+  className,
+  title,
+  emptyMessage,
+  heists,
+  loading,
+  error,
+}: HeistSectionProps) {
+  return (
+    <div className={className}>
+      <h2>{title}</h2>
+      {loading && <p>Loading...</p>}
+      {error && <p role="alert">Error: {error}</p>}
+      {!loading && !error && heists.length === 0 && <p>{emptyMessage}</p>}
+      {!loading && !error && heists.length > 0 && (
+        <ul>
+          {heists.map((heist) => (
+            <li key={heist.id}>{heist.title}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 export default function HeistsPage() {
+  const active = useHeists("active")
+  const assigned = useHeists("assigned")
+  const expired = useHeists("expired")
+
   return (
     <div className="page-content">
-      <div className="active-heists">
-        <h2>Your Active Heists</h2>
-      </div>
-      <div className="assigned-heists">
-        <h2>Heists You have Assigned</h2>
-      </div>
-      <div className="expired-heists">
-        <h2>All Expired Heists</h2>
-      </div>
+      <HeistSection
+        className="active-heists"
+        title="Your Active Heists"
+        emptyMessage="No active heists"
+        {...active}
+      />
+      <HeistSection
+        className="assigned-heists"
+        title="Heists You have Assigned"
+        emptyMessage="You haven't assigned any heists"
+        {...assigned}
+      />
+      <HeistSection
+        className="expired-heists"
+        title="All Expired Heists"
+        emptyMessage="No expired heists"
+        {...expired}
+      />
     </div>
   )
 }

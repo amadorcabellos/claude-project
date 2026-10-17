@@ -64,3 +64,9 @@ For create-heist-form
 ```
 /spec let's spec out the 'create heist' form in @app/(dashboard)/heists/create/page.tsx. When the form is submitted, it should create a new heist document in a firestore heists collection, and then redirect the user to the /heists page. Codenames and user ids can be fetched from the users collection, so that users can assign the heist to other users. Use the CreateHeistInput interface for input fields. createAt and deadline values added programatically.
 ```
+
+For use-heists-hook
+```
+/spec let's spec hook for accessing heists data from the firestore collection, called
+useHeists. It should access real-time data and return an array of heist objects. The hook should accept an argument, which is either: 'active' (all heists assigned To the current user, where the deadline date has not passed), 'assigned' (all heists assigned By the current user, where the deadline date has not passed) or 'expired' (all heists where the deadline has passed AND where the finalStatus is NOT null, regardless of the user). The hook should use the value of this argument to make queries appropriately. Once created, let's use the hook to show only the titles of the 3 different result sets on the @app/(dashboard)/heists/page.tsx page.
+```
