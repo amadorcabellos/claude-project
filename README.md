@@ -45,7 +45,7 @@ For login-form-functionality
 ```
 
 
-For route-protection-auth-guards
+To create spec route-protection-auth-guards
 ```
 /spec Let's spec some route protection. Pages in the (public) group should only be viewable to unauthenticated users, and pages in the (dashboard) group should only be viewable to authenticated users. Use the useUser hook to conditionally redirect users. Let's also show a very simple loader in the group layouts until the auth status is identified from firebase and the redirects kick in.
 ```
@@ -60,18 +60,28 @@ To use plugin frontend-design
 Can you design a better welcome/splash page for new users to the site, who don't yet have an account. It should have a 'register' button directing to /signup. The page is @app/lpublic)/page.tsx. Keep it in line with the current theme/colours.
 ```
 
-For create-heist-form
+To create spec create-heist-form
 ```
 /spec let's spec out the 'create heist' form in @app/(dashboard)/heists/create/page.tsx. When the form is submitted, it should create a new heist document in a firestore heists collection, and then redirect the user to the /heists page. Codenames and user ids can be fetched from the users collection, so that users can assign the heist to other users. Use the CreateHeistInput interface for input fields. createAt and deadline values added programatically.
 ```
 
-For use-heists-hook
+To create spec use-heists-hook
 ```
 /spec let's spec hook for accessing heists data from the firestore collection, called
 useHeists. It should access real-time data and return an array of heist objects. The hook should accept an argument, which is either: 'active' (all heists assigned To the current user, where the deadline date has not passed), 'assigned' (all heists assigned By the current user, where the deadline date has not passed) or 'expired' (all heists where the deadline has passed AND where the finalStatus is NOT null, regardless of the user). The hook should use the value of this argument to make queries appropriately. Once created, let's use the hook to show only the titles of the 3 different result sets on the @app/(dashboard)/heists/page.tsx page.
 ```
 
-For use-heists-hook
+To create spec heist-card-component
 ```
 /spec let's make a spec for the heist card component, which can then be shown on the /heists page for active and assigned heists only (not expired heists). The titles of the heists should link to the details page (/heists/:id) but do not add any content to that page yet. The cards can be displayed in a 3-column grid layout. Let's also make a Heist card Skeleton to show in the same layout until they're loaded. The heist card component design can be extracted from Figma: https://www.figma.com/design/uIo2S2lzu1PcYaOmHCCmOn/ClaudeCodeMasterClass?node-id=54-60&t=2xMCS9Ij87jLaxbr-4
+```
+
+To create agent figma-design-extractor
+```
+Create agent in local /.claude/agents A UX/UI design extractor. The agent should use the Figma MCP server to inspect and analyse given design components in Figma and extract all the relevant information to re-create that design with code in the current project - using all current project coding standards, frameworks and libraries. It should produce a condensed design report/brief, including colours used, layout, shapes, icons, imagery etc, along with coding examples of how best to create the given design for this project. It should produce the output in a standardized way.
+```
+
+To create agent figma-design-extractor
+```
+Create agent in local /.claude/agents an accessibility reviewer for web apps used after UI changes especially when diffs touch components, forms, modals, navigation, dialogues, menus or pages. Review for semantic HTML, ARIA roles, attribute correctness, labels and accessible names, heading structure, alt text, focus management, keyboard navigation, error messaging and announcements for dynamic content. Return a concise report with severity, file slash line references and recommended concrete fixes. Review only the code provided in the diff. Treat the diff as the entire code base. Do not analyze or reference any code that is unchanged or not explicitly shown. 
 ```

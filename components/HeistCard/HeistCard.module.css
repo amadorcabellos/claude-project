@@ -1,0 +1,102 @@
+@reference "../../app/globals.css";
+
+/* card */
+.card {
+  @apply flex flex-col gap-3 rounded-xl border border-transparent bg-light p-5 transition-colors;
+  min-height: 178px;
+}
+
+.card:hover {
+  @apply border-lighter shadow-lg shadow-black/40;
+}
+
+.cardHeader {
+  @apply flex items-start justify-between gap-3;
+}
+
+.titleHeading {
+  @apply flex-1 text-base font-semibold leading-6;
+}
+
+.title {
+  @apply text-heading no-underline transition-colors;
+}
+
+.title:hover {
+  @apply text-primary underline;
+}
+
+.title:focus-visible {
+  @apply rounded-sm outline-2 outline-offset-2 outline-primary;
+}
+
+.clockIcon {
+  @apply mt-0.5 shrink-0 text-body;
+}
+
+/* meta rows */
+.meta {
+  @apply flex flex-col gap-2;
+}
+
+.assigneeRow,
+.timestamp {
+  @apply flex items-center gap-2 text-sm text-body;
+}
+
+.icon {
+  @apply shrink-0;
+}
+
+.usernamePrimary {
+  @apply text-primary;
+}
+
+.usernameSecondary {
+  @apply text-secondary;
+}
+
+.deadlineOverdue {
+  @apply text-error;
+}
+
+.deadlineNormal {
+  @apply text-body;
+}
+
+/* skeleton */
+.skeleton {
+  @apply animate-pulse motion-reduce:animate-none;
+}
+
+.skeleton:hover {
+  @apply border-transparent shadow-none;
+}
+
+.skeletonTitle {
+  @apply mb-2 h-5 rounded-md bg-lighter;
+}
+
+.skeletonLine {
+  @apply h-4 rounded-md bg-lighter;
+}
+
+.w75 {
+  @apply w-3/4;
+}
+
+.w60 {
+  @apply w-3/5;
+}
+
+.w55 {
+  width: 55%;
+}
+
+.w40 {
+  @apply w-2/5;
+}
+
+.w50 {
+  @apply w-1/2;
+}

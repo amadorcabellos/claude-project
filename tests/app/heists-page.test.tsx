@@ -53,20 +53,62 @@ describe("HeistsPage", () => {
     ).toBeInTheDocument()
   })
 
-  it("shows loading, empty and error states per section", () => {
+  it("renders active and assigned heists as cards linking to their details page", () => {
+    mockFilters({
+      active: heistsResult(["Swap the clock"]),
+      assigned: heistsResult(["Hide the stapler"]),
+      expired: heistsResult(["Borrow the plant"]),
+    })
+    render(<HeistsPage />)
+
+    expect(
+      within(section("Your Active Heists")).getByRole("link", {
+        name: "Swap the clock",
+      }),
+    ).toHaveAttribute("href", "/heists/Swap the clock-0")
+    expect(
+      within(section("Heists You have Assigned")).getByRole("link", {
+        name: "Hide the stapler",
+      }),
+    ).toHaveAttribute("href", "/heists/Hide the stapler-0")
+    // expired heists stay a plain list of titles
+    expect(
+      within(section("All Expired Heists")).queryByRole("link"),
+    ).not.toBeInTheDocument()
+  })
+
+  it("shows skeleton cards while active and assigned heists are loading", () => {
     mockFilters({
       active: { heists: [], loading: true, error: null },
+      assigned: { heists: [], loading: true, error: null },
+      expired: heistsResult([]),
+    })
+    render(<HeistsPage />)
+
+    expect(
+      within(section("Your Active Heists")).getAllByRole("status"),
+    ).toHaveLength(3)
+    expect(
+      within(section("Heists You have Assigned")).getAllByRole("status"),
+    ).toHaveLength(3)
+  })
+
+  it("shows empty and error states per section", () => {
+    mockFilters({
+      active: heistsResult([]),
       assigned: heistsResult([]),
       expired: { heists: [], loading: false, error: "Failed to load heists" },
     })
     render(<HeistsPage />)
 
     expect(
-      within(section("Your Active Heists")).getByText("Loading..."),
+      within(section("Your Active Heists")).getByText(
+        "No active heists assigned to you",
+      ),
     ).toBeInTheDocument()
     expect(
       within(section("Heists You have Assigned")).getByText(
-        "You haven't assigned any heists",
+        "No heists you've assigned",
       ),
     ).toBeInTheDocument()
     expect(

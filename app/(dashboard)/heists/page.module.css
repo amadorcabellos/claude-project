@@ -1,0 +1,21 @@
+@reference "../../globals.css";
+
+.section {
+  @apply mb-10;
+}
+
+.sectionTitle {
+  @apply mb-4 text-xl font-bold;
+}
+
+.grid {
+  @apply grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-1;
+}
+
+.emptyState {
+  @apply py-6 text-center text-body;
+}
+
+.errorMessage {
+  @apply text-error;
+}
