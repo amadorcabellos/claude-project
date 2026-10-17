@@ -70,3 +70,8 @@ For use-heists-hook
 /spec let's spec hook for accessing heists data from the firestore collection, called
 useHeists. It should access real-time data and return an array of heist objects. The hook should accept an argument, which is either: 'active' (all heists assigned To the current user, where the deadline date has not passed), 'assigned' (all heists assigned By the current user, where the deadline date has not passed) or 'expired' (all heists where the deadline has passed AND where the finalStatus is NOT null, regardless of the user). The hook should use the value of this argument to make queries appropriately. Once created, let's use the hook to show only the titles of the 3 different result sets on the @app/(dashboard)/heists/page.tsx page.
 ```
+
+For use-heists-hook
+```
+/spec let's make a spec for the heist card component, which can then be shown on the /heists page for active and assigned heists only (not expired heists). The titles of the heists should link to the details page (/heists/:id) but do not add any content to that page yet. The cards can be displayed in a 3-column grid layout. Let's also make a Heist card Skeleton to show in the same layout until they're loaded. The heist card component design can be extracted from Figma: https://www.figma.com/design/uIo2S2lzu1PcYaOmHCCmOn/ClaudeCodeMasterClass?node-id=54-60&t=2xMCS9Ij87jLaxbr-4
+```

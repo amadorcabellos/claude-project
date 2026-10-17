@@ -1,7 +1,7 @@
 ---
 description: Create a feature spec file and branch from a short idea
 argument-hint: "[Short feature description, optionally: 'figma: <component-link>']"
-allowed-tools: Read, Write, Glob, Bash(git switch:*)
+allowed-tools: Read, Write, Glob, Agent, Bash(git status:*), Bash(git branch:*), Bash(git switch:*)
 ---
 
 You are helping to spin up a new feature spec for this application, from a short idea provided in the user input below. Always adhere to any rules or requirements set out in any CLAUDE.md files when responding.
@@ -56,20 +56,19 @@ From `$ARGUMENTS`, extract:
 
 If you cannot infer a sensible `feature_title` and `feature_slug`, ask the user to clarify instead of guessing.
 
-## Step 2.5 Pull Figma context when needed
+## Step 2.5. Pull Figma context when needed
 
-If `figma_hint` is present and Figma MCP tools are available:
+If `figma_hint` is present and the Figma MCP tools are available:
 
-1. Use the Figma MCP tools to locate the component, layer or frame.
-2. Extract only information that is useful for implementation, such as:
+1. Use the **figma-design-extractor** subagent to provide a design guide for the feature, citing the `figma_hint`, and tell it to extract only information that is useful for implementation, such as:
    - Dimensions and layout (grid, spacing, alignment)
    - Key typography tokens (font family, size, weight)
    - Color tokens and semantic usage (primary, surface, border, error etc.)
    - Border radius, shadows, and any notable visual detail
    - Icons, buttons, links or other UI elements
-3. Summarise this as 3 to 8 concise bullet points and also leave a link to the figma component for future lookups.
-4. If lookup fails or the tools are not available, record a note like:
-   - `"Design reference could not be retrieved. See Figma manually for details."`
+2. Summarise the result as 3 to 8 concise bullet points, and leave a link to the Figma component for future lookups.
+3. If the lookup fails or the tools are not available, record a note like:
+   "Design reference could not be retrieved. See Figma manually for details."
 
 Always summarise into human friendly notes.
 
@@ -86,7 +85,7 @@ Create a markdown spec document that Plan mode can use directly and save it in t
 After the file is saved, respond to the user with a short summary in this exact format:
 
 Branch: <branch_name>
-Spec file: specs/<feature_slug>.md
+Spec file: _specs/<feature_slug>.md
 Title: <feature_title>
 
 Do not repeat the full spec in the chat output unless the user explicitly asks to see it. The main goal is to save the spec file and report where it lives and what branch name to use.
