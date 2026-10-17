@@ -81,7 +81,7 @@ To create agent figma-design-extractor
 Create agent in local /.claude/agents A UX/UI design extractor. The agent should use the Figma MCP server to inspect and analyse given design components in Figma and extract all the relevant information to re-create that design with code in the current project - using all current project coding standards, frameworks and libraries. It should produce a condensed design report/brief, including colours used, layout, shapes, icons, imagery etc, along with coding examples of how best to create the given design for this project. It should produce the output in a standardized way.
 ```
 
-To create agent figma-design-extractor
+To create agent a11y-reviewer
 ```
 Create agent in local /.claude/agents an accessibility reviewer for web apps used after UI changes especially when diffs touch components, forms, modals, navigation, dialogues, menus or pages. Review for semantic HTML, ARIA roles, attribute correctness, labels and accessible names, heading structure, alt text, focus management, keyboard navigation, error messaging and announcements for dynamic content. Return a concise report with severity, file slash line references and recommended concrete fixes. Review only the code provided in the diff. Treat the diff as the entire code base. Do not analyze or reference any code that is unchanged or not explicitly shown. 
 ```
