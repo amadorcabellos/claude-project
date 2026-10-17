@@ -1,0 +1,148 @@
+@reference "../globals.css";
+
+.splash {
+  @apply mx-auto flex min-h-lvh w-full max-w-6xl flex-col px-4 py-6 sm:px-8 sm:py-8;
+}
+
+.brand {
+  @apply flex items-center gap-1 text-lg font-bold text-heading;
+}
+
+.brand svg {
+  @apply text-primary;
+}
+
+/* hero: tagline + pitch on the left, example heist on the right */
+.hero {
+  @apply grid flex-1 grid-cols-1 items-center gap-14 py-12 lg:grid-cols-[1.15fr_1fr] lg:gap-20;
+}
+
+/* .splash prefix beats the global `.public h1` size rule */
+.splash .tagline {
+  @apply m-0 font-black text-heading;
+  font-size: clamp(4.25rem, 13vw, 8.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+
+.tagline span {
+  @apply block;
+  animation: arrive 500ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.tagline span:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+/* "Gone." lands, then slips away into an outline */
+.tagline span:nth-child(3) {
+  animation:
+    arrive 500ms cubic-bezier(0.2, 0.7, 0.2, 1) 360ms both,
+    vanish 900ms ease-in 1300ms forwards;
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(0.25em);
+  }
+}
+
+@keyframes vanish {
+  to {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(194 122 255 / 0.75);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagline span {
+    animation: none !important;
+  }
+
+  .tagline span:nth-child(3) {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(194 122 255 / 0.75);
+  }
+}
+
+.pitch {
+  @apply mt-8 max-w-md text-lg leading-relaxed;
+}
+
+.actions {
+  @apply mt-8 flex flex-wrap items-center gap-x-6 gap-y-3;
+}
+
+/* .actions prefix beats the global .btn padding */
+.actions .register {
+  @apply px-7 py-3 text-base;
+}
+
+.login {
+  @apply text-sm;
+}
+
+.login a {
+  @apply font-semibold text-primary;
+}
+
+.login a:hover {
+  @apply text-secondary;
+}
+
+/* example heist, shaped like the real heist document */
+.briefing {
+  @apply mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-lighter p-6 shadow-2xl shadow-primary/10;
+  transform: rotate(1.5deg);
+}
+
+.briefingStatus {
+  @apply flex items-center gap-2 text-sm font-medium text-body;
+}
+
+.briefingStatus::before {
+  @apply size-2 rounded-full bg-primary;
+  content: "";
+}
+
+.briefingTitle {
+  @apply mt-3 text-xl font-bold leading-snug text-heading;
+}
+
+.briefingDescription {
+  @apply mt-2 text-sm leading-relaxed;
+}
+
+.briefingCrew {
+  @apply mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 text-sm;
+}
+
+.briefingCrew dd {
+  @apply mt-1 font-semibold text-heading;
+}
+
+.briefingClock {
+  @apply mt-5 flex items-baseline justify-between rounded-xl bg-dark px-4 py-3;
+}
+
+.briefingClock dd {
+  @apply text-2xl font-bold text-heading tabular-nums;
+}
+
+/* a real sequence, so the steps are numbered */
+.steps {
+  @apply grid gap-8 border-t border-white/10 pt-8 sm:grid-cols-3;
+}
+
+.steps li {
+  @apply text-sm leading-relaxed;
+}
+
+.steps h2 {
+  @apply mb-1 flex items-baseline gap-3 text-base font-semibold;
+}
+
+.stepNumber {
+  @apply font-bold text-primary tabular-nums;
+}

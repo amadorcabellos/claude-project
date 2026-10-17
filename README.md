@@ -54,3 +54,13 @@ To use skill firestore-schema
 ```
 Can you set up types/schemas for heist firestore documents? Heists must have a title, description, createdBy (uid), createdByCodename (their codename/displayName), assignedTo (uid), assignedToCodename (their codename), deadline (a Date, 48 hours from when it was created), finalStatus (null to begin with, then either success or failure in the future).
 ```
+
+To use plugin frontend-design
+```
+Can you design a better welcome/splash page for new users to the site, who don't yet have an account. It should have a 'register' button directing to /signup. The page is @app/lpublic)/page.tsx. Keep it in line with the current theme/colours.
+```
+
+For create-heist-form
+```
+/spec let's spec out the 'create heist' form in @app/(dashboard)/heists/create/page.tsx. When the form is submitted, it should create a new heist document in a firestore heists collection, and then redirect the user to the /heists page. Codenames and user ids can be fetched from the users collection, so that users can assign the heist to other users. Use the CreateHeistInput interface for input fields. createAt and deadline values added programatically.
+```

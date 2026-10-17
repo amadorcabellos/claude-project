@@ -1,0 +1,45 @@
+@reference "../../../globals.css";
+
+.form {
+  @apply mx-auto mt-6 flex w-full max-w-sm flex-col gap-4;
+}
+
+.inputGroup {
+  @apply flex flex-col gap-1;
+}
+
+.label {
+  @apply text-sm font-semibold text-heading;
+}
+
+/* textarea and select match the shared Input component */
+.textarea,
+.select {
+  @apply w-full rounded-lg border border-lighter bg-lighter px-3 py-2 text-heading;
+}
+
+.textarea {
+  @apply min-h-28 resize-y;
+}
+
+.textarea::placeholder {
+  @apply text-body;
+}
+
+.textarea:focus-visible,
+.select:focus-visible {
+  @apply outline-2 outline-primary;
+}
+
+.textarea:disabled,
+.select:disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.error {
+  @apply bg-error/10 text-error text-sm p-3 rounded mb-4;
+}
+
+.emptyState {
+  @apply mx-auto mt-6 max-w-sm text-center;
+}
