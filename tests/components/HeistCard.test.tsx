@@ -87,11 +87,11 @@ describe("HeistCard", () => {
 })
 
 describe("HeistCardSkeleton", () => {
-  it("renders an accessible loading status", () => {
-    render(<HeistCardSkeleton />)
+  // the section announces loading once, so each skeleton stays out of the accessibility tree
+  it("is hidden from assistive technology", () => {
+    const { container } = render(<HeistCardSkeleton />)
 
-    const status = screen.getByRole("status")
-    expect(status).toHaveAttribute("aria-busy", "true")
-    expect(status).toHaveTextContent(/loading/i)
+    expect(container.firstChild).toHaveAttribute("aria-hidden", "true")
+    expect(screen.queryByRole("status")).not.toBeInTheDocument()
   })
 })

@@ -7,7 +7,7 @@ import ExpiredHeistCard, {
 } from "@/components/ExpiredHeistCard"
 
 // types
-import type { Heist } from "@/types/firestore"
+import type { Heist, HeistFinalStatus } from "@/types/firestore"
 
 function makeHeist(overrides: Partial<Heist> = {}): Heist {
   return {
@@ -42,10 +42,14 @@ describe("ExpiredHeistCard", () => {
     expect(screen.getByText("@NightOwl")).toBeInTheDocument()
   })
 
-  it("shows the formatted deadline", () => {
+  it("shows the deadline as a labelled time element", () => {
     render(<ExpiredHeistCard heist={makeHeist()} />)
 
-    expect(screen.getByText("Nov 28, 03:30 PM")).toBeInTheDocument()
+    const deadline = new Date("2026-11-28T15:30:00")
+    const time = screen.getByText(/Nov 28, 03:30/)
+    expect(time.tagName).toBe("TIME")
+    expect(time).toHaveAttribute("datetime", deadline.toISOString())
+    expect(time.parentElement).toHaveTextContent(/^Deadline:/)
   })
 
   it("shows a failed badge for failed heists", () => {
@@ -60,21 +64,48 @@ describe("ExpiredHeistCard", () => {
     expect(screen.getByText(/^success$/i)).toBeInTheDocument()
   })
 
+  it("labels the badge as the outcome for screen readers", () => {
+    render(<ExpiredHeistCard heist={makeHeist()} />)
+
+    expect(screen.getByText(/^failed$/i).parentElement).toHaveTextContent(
+      /^Outcome: Failed$/,
+    )
+  })
+
+  it("shows no badge when the final status is missing or unknown", () => {
+    const { rerender } = render(
+      <ExpiredHeistCard heist={makeHeist({ finalStatus: null })} />,
+    )
+    expect(screen.queryByText(/failed|success/i)).not.toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: TITLE })).toBeInTheDocument()
+
+    // bad data from Firestore, including names inherited from Object.prototype
+    for (const value of ["pending", "toString"]) {
+      rerender(
+        <ExpiredHeistCard
+          heist={makeHeist({ finalStatus: value as HeistFinalStatus })}
+        />,
+      )
+      expect(screen.queryByText(/failed|success/i)).not.toBeInTheDocument()
+      expect(screen.getByRole("heading", { name: TITLE })).toBeInTheDocument()
+    }
+  })
+
   it("does not crash when the deadline is missing", () => {
     const heist = makeHeist({ deadline: undefined as unknown as Date })
     render(<ExpiredHeistCard heist={heist} />)
 
     expect(screen.getByRole("heading", { name: TITLE })).toBeInTheDocument()
-    expect(screen.queryByText("Nov 28, 03:30 PM")).not.toBeInTheDocument()
+    expect(screen.queryByText(/Nov 28/)).not.toBeInTheDocument()
   })
 })
 
 describe("ExpiredHeistCardSkeleton", () => {
-  it("renders an accessible loading status", () => {
-    render(<ExpiredHeistCardSkeleton />)
+  // the section announces loading once, so each skeleton stays out of the accessibility tree
+  it("is hidden from assistive technology", () => {
+    const { container } = render(<ExpiredHeistCardSkeleton />)
 
-    const status = screen.getByRole("status")
-    expect(status).toHaveAttribute("aria-busy", "true")
-    expect(status).toHaveTextContent(/loading/i)
+    expect(container.firstChild).toHaveAttribute("aria-hidden", "true")
+    expect(screen.queryByRole("status")).not.toBeInTheDocument()
   })
 })

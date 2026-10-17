@@ -4,6 +4,9 @@ import Link from "next/link"
 // icons
 import { Calendar, Clock, User, Users } from "lucide-react"
 
+// utils
+import { formatTimestamp } from "@/lib/utils/formatTimestamp"
+
 // types
 import type { Heist } from "@/types/firestore/heist"
 
@@ -31,15 +34,6 @@ function formatDeadline(deadline: Date): { text: string; isOverdue: boolean } {
     text: `${plural(Math.floor(hours / 24), "day")} left`,
     isOverdue: false,
   }
-}
-
-function formatTimestamp(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  })
 }
 
 export default function HeistCard({ heist }: HeistCardProps) {

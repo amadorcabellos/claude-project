@@ -87,12 +87,16 @@ describe("HeistsPage", () => {
     })
     render(<HeistsPage />)
 
-    expect(
-      within(section("Your Active Heists")).getAllByRole("status"),
-    ).toHaveLength(3)
-    expect(
-      within(section("Heists You have Assigned")).getAllByRole("status"),
-    ).toHaveLength(3)
+    // each section announces loading once, naming the section
+    for (const name of [
+      "Your Active Heists",
+      "Heists You have Assigned",
+      "All Expired Heists",
+    ]) {
+      const status = within(section(name)).getByRole("status")
+      expect(status).toHaveTextContent(`Loading ${name}`)
+    }
+
     // the expired section uses its own skeleton, the others use HeistCardSkeleton
     expect(
       within(section("All Expired Heists")).getAllByTestId(

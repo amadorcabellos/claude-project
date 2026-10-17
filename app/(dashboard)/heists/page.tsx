@@ -45,8 +45,10 @@ function HeistSection({
     <div className={`${className} ${styles.section}`}>
       <h2 className={styles.sectionTitle}>{title}</h2>
 
+      {/* one loading announcement per section; the skeletons are aria-hidden */}
       {loading && (
-        <div className={styles.grid}>
+        <div className={styles.grid} role="status">
+          <span className="sr-only">Loading {title}…</span>
           {Array.from({ length: SKELETON_COUNT }, (_, i) => (
             <Skeleton key={i} />
           ))}

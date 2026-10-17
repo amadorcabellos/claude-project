@@ -1,16 +1,14 @@
 import styles from "./ExpiredHeistCard.module.css"
 
-// mirrors ExpiredHeistCard's two-row layout with placeholder blocks
+// mirrors ExpiredHeistCard's two-row layout with placeholder blocks; purely
+// visual, as the section that renders it announces the loading state
 export default function ExpiredHeistCardSkeleton() {
   return (
     <div
       className={`${styles.card} ${styles.skeleton}`}
-      role="status"
-      aria-busy="true"
+      aria-hidden="true"
       data-testid="expired-heist-card-skeleton"
     >
-      <span className="sr-only">Loading...</span>
-
       <div className={styles.header}>
         <div className={styles.titleGroup}>
           <div className={styles.skeletonIcon} />

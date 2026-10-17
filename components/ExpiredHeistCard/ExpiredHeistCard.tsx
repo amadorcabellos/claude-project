@@ -2,8 +2,11 @@
 import { Calendar, CircleCheck, CircleX, User } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
+// utils
+import { formatTimestamp } from "@/lib/utils/formatTimestamp"
+
 // types
-import type { Heist, HeistFinalStatus } from "@/types/firestore/heist"
+import type { Heist, HeistFinalStatus } from "@/types/firestore"
 
 import styles from "./ExpiredHeistCard.module.css"
 
@@ -33,18 +36,13 @@ const STATUS: Record<HeistFinalStatus, StatusConfig> = {
   },
 }
 
-function formatTimestamp(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  })
-}
-
 export default function ExpiredHeistCard({ heist }: ExpiredHeistCardProps) {
-  // unknown or missing statuses render without an icon or badge
-  const status = heist.finalStatus ? STATUS[heist.finalStatus] : undefined
+  // unknown or missing statuses render without an icon or badge; hasOwn keeps
+  // bad data like "toString" from matching inherited Object properties
+  const status =
+    heist.finalStatus && Object.hasOwn(STATUS, heist.finalStatus)
+      ? STATUS[heist.finalStatus]
+      : undefined
   const hasDeadline =
     heist.deadline instanceof Date && !isNaN(heist.deadline.getTime())
 
@@ -63,14 +61,20 @@ export default function ExpiredHeistCard({ heist }: ExpiredHeistCardProps) {
 
         <div className={styles.aside}>
           {hasDeadline && (
-            <p className={styles.deadline}>
+            <p className={styles.metaItem}>
               <Calendar size={12} className={styles.icon} />
-              <span>{formatTimestamp(heist.deadline)}</span>
+              <span className="sr-only">Deadline: </span>
+              <time dateTime={heist.deadline.toISOString()}>
+                {formatTimestamp(heist.deadline)}
+              </time>
             </p>
           )}
           {status && (
-            <span className={`${styles.badge} ${status.badgeClass}`}>
-              {status.label}
+            <span>
+              <span className="sr-only">Outcome: </span>
+              <span className={`${styles.badge} ${status.badgeClass}`}>
+                {status.label}
+              </span>
             </span>
           )}
         </div>
