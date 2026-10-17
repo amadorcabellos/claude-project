@@ -76,6 +76,11 @@ To create spec heist-card-component
 /spec let's make a spec for the heist card component, which can then be shown on the /heists page for active and assigned heists only (not expired heists). The titles of the heists should link to the details page (/heists/:id) but do not add any content to that page yet. The cards can be displayed in a 3-column grid layout. Let's also make a Heist card Skeleton to show in the same layout until they're loaded. The heist card component design can be extracted from Figma: https://www.figma.com/design/uIo2S2lzu1PcYaOmHCCmOn/ClaudeCodeMasterClass?node-id=54-60&t=2xMCS9Ij87jLaxbr-4
 ```
 
+To create spec expired-heist-card-component
+```
+/spec let's make a spec for the expired heist card component, which can then be shown on the /heists page for expired heists. Let's also make a Expired Heist card Skeleton to show in the same layout until they're loaded. The expired heist card component design can be extracted from Figma: https://www.figma.com/design/uIo2S2lzu1PcYaOmHCCmOn/ClaudeCodeMasterClass?node-id=34-13&t=2xMCS9Ij87jLaxbr-4
+```
+
 To create agent figma-design-extractor
 ```
 Create agent in local /.claude/agents A UX/UI design extractor. The agent should use the Figma MCP server to inspect and analyse given design components in Figma and extract all the relevant information to re-create that design with code in the current project - using all current project coding standards, frameworks and libraries. It should produce a condensed design report/brief, including colours used, layout, shapes, icons, imagery etc, along with coding examples of how best to create the given design for this project. It should produce the output in a standardized way.

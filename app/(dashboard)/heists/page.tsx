@@ -1,50 +1,57 @@
 "use client"
 
+// react
+import type { ComponentType } from "react"
+
 // hooks
 import { useHeists } from "@/lib/hooks"
 import type { UseHeistsReturn } from "@/lib/hooks"
 
 // components
 import HeistCard, { HeistCardSkeleton } from "@/components/HeistCard"
+import ExpiredHeistCard, {
+  ExpiredHeistCardSkeleton,
+} from "@/components/ExpiredHeistCard"
+
+// types
+import type { Heist } from "@/types/firestore"
 
 import styles from "./page.module.css"
 
-// one row of placeholders while a card section loads
+// one row of placeholders while a section loads
 const SKELETON_COUNT = 3
 
 interface HeistSectionProps extends UseHeistsReturn {
   className: string
   title: string
   emptyMessage: string
-  // active and assigned heists show as cards, expired heists as a plain list
-  variant: "cards" | "list"
+  // active and assigned heists use HeistCard, expired heists ExpiredHeistCard,
+  // each with its matching skeleton while loading
+  Card: ComponentType<{ heist: Heist }>
+  Skeleton: ComponentType
 }
 
 function HeistSection({
   className,
   title,
   emptyMessage,
-  variant,
+  Card,
+  Skeleton,
   heists,
   loading,
   error,
 }: HeistSectionProps) {
-  const isCards = variant === "cards"
-
   return (
     <div className={`${className} ${styles.section}`}>
       <h2 className={styles.sectionTitle}>{title}</h2>
 
-      {loading &&
-        (isCards ? (
-          <div className={styles.grid}>
-            {Array.from({ length: SKELETON_COUNT }, (_, i) => (
-              <HeistCardSkeleton key={i} />
-            ))}
-          </div>
-        ) : (
-          <p>Loading...</p>
-        ))}
+      {loading && (
+        <div className={styles.grid}>
+          {Array.from({ length: SKELETON_COUNT }, (_, i) => (
+            <Skeleton key={i} />
+          ))}
+        </div>
+      )}
 
       {error && (
         <p role="alert" className={styles.errorMessage}>
@@ -56,22 +63,13 @@ function HeistSection({
         <p className={styles.emptyState}>{emptyMessage}</p>
       )}
 
-      {!loading &&
-        !error &&
-        heists.length > 0 &&
-        (isCards ? (
-          <div className={styles.grid}>
-            {heists.map((heist) => (
-              <HeistCard key={heist.id} heist={heist} />
-            ))}
-          </div>
-        ) : (
-          <ul>
-            {heists.map((heist) => (
-              <li key={heist.id}>{heist.title}</li>
-            ))}
-          </ul>
-        ))}
+      {!loading && !error && heists.length > 0 && (
+        <div className={styles.grid}>
+          {heists.map((heist) => (
+            <Card key={heist.id} heist={heist} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -87,21 +85,24 @@ export default function HeistsPage() {
         className="active-heists"
         title="Your Active Heists"
         emptyMessage="No active heists assigned to you"
-        variant="cards"
+        Card={HeistCard}
+        Skeleton={HeistCardSkeleton}
         {...active}
       />
       <HeistSection
         className="assigned-heists"
         title="Heists You have Assigned"
         emptyMessage="No heists you've assigned"
-        variant="cards"
+        Card={HeistCard}
+        Skeleton={HeistCardSkeleton}
         {...assigned}
       />
       <HeistSection
         className="expired-heists"
         title="All Expired Heists"
         emptyMessage="No expired heists"
-        variant="list"
+        Card={ExpiredHeistCard}
+        Skeleton={ExpiredHeistCardSkeleton}
         {...expired}
       />
     </div>

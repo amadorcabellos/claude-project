@@ -53,7 +53,7 @@ describe("HeistsPage", () => {
     ).toBeInTheDocument()
   })
 
-  it("renders active and assigned heists as cards linking to their details page", () => {
+  it("links active and assigned card titles to their details page, but not expired ones", () => {
     mockFilters({
       active: heistsResult(["Swap the clock"]),
       assigned: heistsResult(["Hide the stapler"]),
@@ -71,17 +71,19 @@ describe("HeistsPage", () => {
         name: "Hide the stapler",
       }),
     ).toHaveAttribute("href", "/heists/Hide the stapler-0")
-    // expired heists stay a plain list of titles
+    // expired heists render as display-only cards
+    const expired = within(section("All Expired Heists"))
     expect(
-      within(section("All Expired Heists")).queryByRole("link"),
-    ).not.toBeInTheDocument()
+      expired.getByRole("heading", { name: "Borrow the plant" }),
+    ).toBeInTheDocument()
+    expect(expired.queryByRole("link")).not.toBeInTheDocument()
   })
 
-  it("shows skeleton cards while active and assigned heists are loading", () => {
+  it("shows skeleton cards while each section is loading", () => {
     mockFilters({
       active: { heists: [], loading: true, error: null },
       assigned: { heists: [], loading: true, error: null },
-      expired: heistsResult([]),
+      expired: { heists: [], loading: true, error: null },
     })
     render(<HeistsPage />)
 
@@ -91,6 +93,30 @@ describe("HeistsPage", () => {
     expect(
       within(section("Heists You have Assigned")).getAllByRole("status"),
     ).toHaveLength(3)
+    // the expired section uses its own skeleton, the others use HeistCardSkeleton
+    expect(
+      within(section("All Expired Heists")).getAllByTestId(
+        "expired-heist-card-skeleton",
+      ),
+    ).toHaveLength(3)
+    expect(
+      within(section("Your Active Heists")).queryByTestId(
+        "expired-heist-card-skeleton",
+      ),
+    ).not.toBeInTheDocument()
+  })
+
+  it("shows the expired section's empty message", () => {
+    mockFilters({
+      active: heistsResult([]),
+      assigned: heistsResult([]),
+      expired: heistsResult([]),
+    })
+    render(<HeistsPage />)
+
+    expect(
+      within(section("All Expired Heists")).getByText("No expired heists"),
+    ).toBeInTheDocument()
   })
 
   it("shows empty and error states per section", () => {
